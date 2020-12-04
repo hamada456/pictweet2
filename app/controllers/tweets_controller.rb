@@ -7,5 +7,14 @@ class TweetsController < ApplicationController
   def new
     @tweet = Tweet.new
   end
-  
+
+  def create
+    Tweet.create(tweet_params)#下のtweet_paramsを呼び出す
+  end
+
+  private
+  def tweet_params
+    params.require(:tweet).permit(:name, :image, :text)
+  end
+
 end
