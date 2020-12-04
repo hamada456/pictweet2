@@ -3,7 +3,8 @@ class TweetsController < ApplicationController
   before_action :move_to_index, except: [:index, :show]#リダイレクト
 
   def index
-    @tweets = Tweet.includes(:user)#N＋１問題を解決#@tweets = Tweet.all
+    @tweets = Tweet.includes(:user).order("created_at DESC")
+    #N＋１問題を解決#@tweets = Tweet.all
     #includesメソッドを使用するとすべてのレコードを取得するため、allメソッドは省略可能
   end
 
