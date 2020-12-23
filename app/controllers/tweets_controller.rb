@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:edit, :show]
-  before_action :move_to_index, except: [:index, :show]#リダイレクト
+  before_action :move_to_index, except: [:index, :show, :search]#リダイレクト
 
   def index
     @tweets = Tweet.includes(:user).order("created_at DESC")
@@ -34,6 +34,10 @@ class TweetsController < ApplicationController
     @comments = @tweet.comments.includes(:user)
   end
   
+  def search#サーチアクション
+    @tweets = Tweet.search(params[:keyword])
+  end
+
   private
   def tweet_params
     params.require(:tweet).permit(:image, :text).merge(user_id: current_user.id)
